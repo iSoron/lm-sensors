@@ -563,8 +563,16 @@ function UpdateFanSpeeds
 		then
 			prevtemp=("${prevtemp[@]:1}")
 		fi
-		# calculate the average value of all elements
-		tval=$(( ( ${prevtemp[@]/%/+}0 ) / ${#prevtemp[@]} ))
+
+		# # calculate the average value of all elements
+		# tval=$(( ( ${prevtemp[@]/%/+}0 ) / ${#prevtemp[@]} ))
+
+		# calculate the maximum value of all elements
+		tval=${prevtemp[0]}
+		for n in "${prevtemp[@]}" ; do
+		    ((n > tval)) && tval=$n
+		done
+
 		# copy prevtemp back to PREVIOUSTEMP_$fcvcount
 		eval "PREVIOUSTEMP_$fcvcount=(\"${prevtemp[@]}\")"
 
